@@ -1,7 +1,7 @@
 import React from "react";
 
 import { client } from "../lib/client";
-import { Product, FooterBanner, HeroBanner } from "../components";
+import { AnnouncementBar } from "../components";
 
 // Home component to render the fetched data
 const Home = ({ categories, groupedProducts }) => {
@@ -11,8 +11,7 @@ const Home = ({ categories, groupedProducts }) => {
 
   return (
     <div>
-      {/* Render the Navbar with categories */}
-      <div>HOME PAGE OF SUNDARAM FURNITURE</div>
+      <AnnouncementBar />
     </div>
   );
 };
