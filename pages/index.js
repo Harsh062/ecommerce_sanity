@@ -1,34 +1,66 @@
-import React from 'react';
+import React from "react";
 
-import { client } from '../lib/client';
-import { Product, FooterBanner, HeroBanner } from '../components';
+import { client } from "../lib/client";
+import { Product, FooterBanner, HeroBanner } from "../components";
 
-const Home = ({ products, bannerData }) => (
-  <div>
-    <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
-    <div className="products-heading">
-      <h2>Best Seller Products</h2>
-      <p>speaker There are many variations passages</p>
+// Home component to render the fetched data
+const Home = ({ categories, groupedProducts }) => {
+  // Log the categories to the browser console
+  console.log("Categories in Home component: ", categories);
+  console.log("groupedProducts in Home component: ", groupedProducts);
+
+  return (
+    <div>
+      {/* Render the Navbar with categories */}
+      <div>HOME PAGE OF SUNDARAM FURNITURE</div>
     </div>
+  );
+};
 
-    <div className="products-container">
-      {products?.map((product) => <Product key={product._id} product={product} />)}
-    </div>
-
-    <FooterBanner footerBanner={bannerData && bannerData[0]} />
-  </div>
-);
+// Updated GROQ query to fetch categories, sub-categories, and furniture types
+const categoriesQuery = `
+  *[_type == "category"]{
+    title,
+    slug,
+    // Fetch subCategories that reference this category
+    "subCategories": *[_type == "subCategory" && references(^._id)]{
+      title,
+      slug,
+      "furnitureTypes": *[_type == "furnitureType" && references(^._id)]{
+        title,
+        slug,
+        description
+      }
+    },
+    // Fetch furniture types that do not have an associated subCategory but reference this category
+    "furnitureTypesWithoutSubCategory": *[_type == "furnitureType" && !defined(subCategories) && references(^._id)]{
+      title,
+      slug,
+      description
+    }
+  }
+`;
+const groupedProductsQuery = `*[_type == "furnitureType" && _id in ["2d16a0cb-515e-4247-8999-350b8b49d89f", "2138f4a0-a2fc-4d80-9294-28a0ce3f94b3", "1c7f6851-afbd-4020-a3d9-c565ba395410", "d9046563-7eb0-424c-b562-fb94dfec2200", "38ee9685-494c-4eb5-8f91-4bbaa6841530"]] {
+  _id,
+  title,
+  "slug": slug.current,
+  "products": *[_type == "product" && references(^._id)] {
+    _id,
+    name,
+    slug,
+    discountedPrice,
+    originalPrice,
+    variations
+  }
+}`;
 
 export const getServerSideProps = async () => {
-  const query = '*[_type == "product"]';
-  const products = await client.fetch(query);
-
-  const bannerQuery = '*[_type == "banner"]';
-  const bannerData = await client.fetch(bannerQuery);
-
+  const categories = await client.fetch(categoriesQuery);
+  const groupedProducts = await client.fetch(groupedProductsQuery);
+  console.log("Categories: ", categories);
   return {
-    props: { products, bannerData }
-  }
-}
+    props: { categories, groupedProducts },
+  };
+};
 
 export default Home;
