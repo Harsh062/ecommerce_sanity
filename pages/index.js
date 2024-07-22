@@ -1,20 +1,26 @@
-import React from "react";
+import React from 'react'
 
-import { client } from "../lib/client";
-import { AnnouncementBar } from "../components";
+import { client } from '../lib/client'
+import {
+  AnnouncementBar,
+  SectionHeader,
+  MobileNavigationDrawer,
+} from '../components'
 
 // Home component to render the fetched data
 const Home = ({ categories, groupedProducts }) => {
   // Log the categories to the browser console
-  console.log("Categories in Home component: ", categories);
-  console.log("groupedProducts in Home component: ", groupedProducts);
+  console.log('Categories in Home component: ', categories)
+  console.log('groupedProducts in Home component: ', groupedProducts)
 
   return (
     <div>
       <AnnouncementBar />
+      <SectionHeader categories={categories} />
+      <MobileNavigationDrawer categories={categories} />
     </div>
-  );
-};
+  )
+}
 
 // Updated GROQ query to fetch categories, sub-categories, and furniture types
 const categoriesQuery = `
@@ -32,13 +38,13 @@ const categoriesQuery = `
       }
     },
     // Fetch furniture types that do not have an associated subCategory but reference this category
-    "furnitureTypesWithoutSubCategory": *[_type == "furnitureType" && !defined(subCategories) && references(^._id)]{
+   "furnitureTypesWithoutSubCategory": *[_type == "furnitureType" && !defined(subCategory) && references(^._id)]{
       title,
       slug,
       description
     }
   }
-`;
+`
 const groupedProductsQuery = `*[_type == "furnitureType" && _id in ["2d16a0cb-515e-4247-8999-350b8b49d89f", "2138f4a0-a2fc-4d80-9294-28a0ce3f94b3", "1c7f6851-afbd-4020-a3d9-c565ba395410", "d9046563-7eb0-424c-b562-fb94dfec2200", "38ee9685-494c-4eb5-8f91-4bbaa6841530"]] {
   _id,
   title,
@@ -51,15 +57,14 @@ const groupedProductsQuery = `*[_type == "furnitureType" && _id in ["2d16a0cb-51
     originalPrice,
     variations
   }
-}`;
+}`
 
 export const getServerSideProps = async () => {
-  const categories = await client.fetch(categoriesQuery);
-  const groupedProducts = await client.fetch(groupedProductsQuery);
-  console.log("Categories: ", categories);
+  const categories = await client.fetch(categoriesQuery)
+  const groupedProducts = await client.fetch(groupedProductsQuery)
   return {
     props: { categories, groupedProducts },
-  };
-};
+  }
+}
 
-export default Home;
+export default Home
