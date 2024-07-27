@@ -208,7 +208,6 @@ const SectionHeader = ({ categories }) => {
             <div className="navigation__tier-1-container">
               <ul className="navigation__tier-1">
                 {categories.map((category, index) => {
-                  console.log('category:: ', category)
                   const doesCategoryHaveFurnitureType =
                     category.subCategories.length ||
                     category.furnitureTypesWithoutSubCategory.length

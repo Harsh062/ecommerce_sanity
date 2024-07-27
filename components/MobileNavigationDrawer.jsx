@@ -1,17 +1,35 @@
 import React, { useEffect } from 'react'
 
 const MobileNavigationDrawer = ({ categories }) => {
-  const toggleCategoryMenu = (event) => {
-    event.preventDefault()
-    toggleNavigationDrawer(event)
+  const openCategoryMenu = (categoryTitle) => {
+    document.getElementById('mobile-nav-title').textContent = categoryTitle
+    toggleNavigationDrawer()
     toggleNavItem(event)
   }
-  const toggleNavigationDrawer = (event) => {
-    const liParent = event.target.closest('li')
+  const handleBackNavigationClick = () => {
+    toggleNavigationDrawer()
+    handleCategoryClose()
+  }
+  const handleCategoryClose = (event) => {
+    const navigationItems = document.querySelectorAll(
+      '.navigation__tier-1 .navigation__item--with-children',
+    )
+
+    navigationItems.forEach((item) => {
+      if (item.classList.contains('navigation__item--open')) {
+        item.classList.remove('navigation__item--open')
+      }
+    })
+  }
+  const toggleNavigationDrawer = () => {
     const mobileNavigationDrawerElm = document.querySelector(
       '.mobile-navigation-drawer ',
     )
-    if (liParent.classList.contains('navigation__item--open')) {
+    if (
+      mobileNavigationDrawerElm.classList.contains(
+        'mobile-navigation-drawer--child-open',
+      )
+    ) {
       mobileNavigationDrawerElm.classList.remove(
         'mobile-navigation-drawer--child-open',
       )
@@ -43,14 +61,7 @@ const MobileNavigationDrawer = ({ categories }) => {
       }
     }
   }
-  const handleBackNavigationClick = () => {
-    const mobileNavigationDrawerElm = document.querySelector(
-      '.mobile-navigation-drawer ',
-    )
-    mobileNavigationDrawerElm.classList.remove(
-      'mobile-navigation-drawer--child-open',
-    )
-  }
+
   const handleSubcategoryClick = (event) => {
     event.preventDefault()
     toggleFurnitureTypesList(event)
@@ -113,7 +124,7 @@ const MobileNavigationDrawer = ({ categories }) => {
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
             </a>
-            <span className="mobile-nav-title">HOME FURNITURE</span>
+            <span className="mobile-nav-title" id="mobile-nav-title"></span>
             <a
               href="#"
               className="mobile-nav-close mobile-nav-toggle"
@@ -139,7 +150,6 @@ const MobileNavigationDrawer = ({ categories }) => {
           </div>
           <ul className="navigation__tier-1">
             {categories.map((category, index) => {
-              console.log('category:: ', category)
               const doesCategoryHaveFurnitureType =
                 category.subCategories.length ||
                 category.furnitureTypesWithoutSubCategory.length
@@ -162,7 +172,7 @@ const MobileNavigationDrawer = ({ categories }) => {
                       <a
                         className="navigation__children-toggle"
                         href="#"
-                        onClick={toggleCategoryMenu}
+                        onClick={() => openCategoryMenu(category.title)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -243,26 +253,24 @@ const MobileNavigationDrawer = ({ categories }) => {
                                             )
                                           },
                                         )}
-                                        {category.furnitureTypesWithoutSubCategory.map(
-                                          (furnitureTypeWithoutSubCategory) => {
-                                            return (
-                                              <li
-                                                className={`navigation__item ${showMegaMenu ? 'navigation__column' : ''}`}
-                                              >
-                                                <a
-                                                  href={`/collections/${furnitureTypeWithoutSubCategory.slug.current}`}
-                                                  className="navigation__link"
-                                                >
-                                                  {
-                                                    furnitureTypeWithoutSubCategory.title
-                                                  }
-                                                </a>
-                                              </li>
-                                            )
-                                          },
-                                        )}
                                       </ul>
                                     </div>
+                                  </li>
+                                )
+                              },
+                            )}
+                            {category.furnitureTypesWithoutSubCategory.map(
+                              (furnitureTypeWithoutSubCategory) => {
+                                return (
+                                  <li
+                                    className={`navigation__item ${showMegaMenu ? 'navigation__column' : ''}`}
+                                  >
+                                    <a
+                                      href={`/collections/${furnitureTypeWithoutSubCategory.slug.current}`}
+                                      className="navigation__link"
+                                    >
+                                      {furnitureTypeWithoutSubCategory.title}
+                                    </a>
                                   </li>
                                 )
                               },
