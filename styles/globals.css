@@ -9260,9 +9260,6 @@ ul.inline li {
   .image-cont--with-secondary-image .product-block__image-dots {
     display: none;
   }
-  .image-cont--with-secondary-image:hover .product-block__image--active {
-    opacity: 0;
-  }
   .image-cont--with-secondary-image:hover .product-block__image--show-on-hover {
     opacity: 1;
   }

@@ -10,6 +10,11 @@ export const furnitureType = {
       validation: (Rule) => Rule.required().error('Title is required'),
     },
     {
+      name: 'featuredLabelText',
+      title: 'Featured Label Text',
+      type: 'string',
+    },
+    {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
