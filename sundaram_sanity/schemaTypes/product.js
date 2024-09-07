@@ -109,11 +109,12 @@ export const product = {
       description: 'All available variants for this product',
     },
     {
-      name: 'furnitureType',
-      title: 'Furniture Type',
-      type: 'reference',
-      to: {type: 'furnitureType'},
-      validation: (Rule) => Rule.required().error('Furniture type is required'),
+      name: 'furnitureTypes',
+      title: 'Furniture Types',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'furnitureType'}}],
+      description: 'Select the furniture types this product belongs to',
+      validation: (Rule) => Rule.required().error('At least one furniture type is required'),
     },
     {
       name: 'originalPrice',

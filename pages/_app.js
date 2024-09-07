@@ -19,10 +19,8 @@ function MyApp({ Component, pageProps }) {
   // }, [])
   return (
     <StateContext>
-      <Layout>
-        <Toaster />
-        <Component {...pageProps} />
-      </Layout>
+      <Toaster />
+      <Component {...pageProps} />
     </StateContext>
   )
 }
