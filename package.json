@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
+    "@sanity/block-content-to-markdown": "^0.0.5",
     "@sanity/client": "^3.2.0",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.47.1",

@@ -40,8 +40,11 @@ function calculateDiscountPercentage(originalPrice, discountedPrice) {
   return roundedDiscountPercentage
 }
 
-const FeaturedCollection = ({ products, featuredLabelText }) => {
-  console.log('products:: ', products)
+const FeaturedCollection = ({
+  products,
+  featuredLabelText,
+  furnitureTypeSlug,
+}) => {
   return (
     <div className="shopify-section section-featured-collection">
       <div
@@ -72,7 +75,7 @@ const FeaturedCollection = ({ products, featuredLabelText }) => {
             <div className="view-all align-center">
               <a
                 className="small-feature-link"
-                href="/collections/kids-furniture"
+                href={`/collections/${furnitureTypeSlug}`}
               >
                 View all
               </a>

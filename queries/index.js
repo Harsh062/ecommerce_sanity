@@ -40,15 +40,51 @@ export const groupedProductsQuery = `
 `
 
 export const productsListByFurnitureTypeQuery = `
-*[_type == "product" && $furnitureTypeSlug in furnitureTypes[]->slug.current] {
-_id,
-name,
-slug,
-originalPrice,
-discountedPrice,
-variations,
-"furnitureTypes": furnitureTypes[]->{
- slug
+  *[_type == "product" && $furnitureTypeSlug in furnitureTypes[]->slug.current] {
+    _id,
+    name,
+    slug,
+    originalPrice,
+    discountedPrice,
+    description,
+    variations,
+    "furnitureTypes": furnitureTypes[]->{
+    slug
+  }
 }
+`
+
+export const productDetailsQuery = `*[_type == "product" && slug.current == $productSlug][0] {
+  _id,
+  _type,
+  name,
+  "slug": slug.current,
+  heroTitle,
+  description,
+  vendor->{  // Assuming you want details about the vendor, adjust based on your needs
+    _id,
+    name,
+    // Add other vendor fields you may need
+  },
+  variations[] {
+    id,
+    type,
+    value,
+    images[] {
+      asset-> {
+        _id,
+        url
+        // You can also fetch other properties of the image asset such as metadata
+      },
+      caption
+    }
+  },
+  furnitureTypes[]-> {  // Dereferencing furniture types to fetch details
+    _id,
+    title,
+    slug
+  },
+  originalPrice,
+  discountedPrice,
 }
 `

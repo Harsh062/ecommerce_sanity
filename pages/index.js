@@ -12,6 +12,7 @@ const Home = ({ categories, groupedProducts }) => {
           key={group._id}
           products={group.products}
           featuredLabelText={group.featuredLabelText}
+          furnitureTypeSlug={group.slug}
         />
       ))}
       <StoreInfo />

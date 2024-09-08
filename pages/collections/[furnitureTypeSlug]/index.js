@@ -1,4 +1,5 @@
 import React from 'react'
+import blockContentToMarkdown from '@sanity/block-content-to-markdown'
 import { Layout } from '../../../components'
 import {
   categoriesQuery,
@@ -102,7 +103,7 @@ const FurnitureTypeList = ({ products, categories }) => {
 
 export const getServerSideProps = async (context) => {
   const { params } = context
-  const furnitureTypeSlug = params.furnitureType
+  const furnitureTypeSlug = params.furnitureTypeSlug
   // Query to get products that belong to a specific furnitureType
 
   const categories = await client.fetch(categoriesQuery)
