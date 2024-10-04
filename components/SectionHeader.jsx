@@ -346,7 +346,7 @@ const SectionHeader = ({ categories }) => {
         ></a>
       </div>
 
-      <script>
+      {/* <script>
         {`
           // Your script content here
           theme.inlineNavigationCheck = function() {
@@ -401,7 +401,7 @@ const SectionHeader = ({ categories }) => {
           };
           setTimeout(theme.setInitialHeaderHeightProperty, 0);
         `}
-      </script>
+      </script> */}
     </div>
   )
 }

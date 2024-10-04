@@ -13250,3 +13250,7 @@ model-viewer .container {
   --link-underline: rgba(33, 33, 33, 0.6);
   --announcement-font-size: 14px;
 }
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

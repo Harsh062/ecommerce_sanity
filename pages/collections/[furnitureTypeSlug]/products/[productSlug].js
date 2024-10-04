@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
-import OwlCarousel from 'react-owl-carousel'
+import Markdown from 'react-markdown'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import { useEffect } from 'react'
 import blockContentToMarkdown from '@sanity/block-content-to-markdown'
 import { Layout } from '../../../../components'
 import { categoriesQuery, productDetailsQuery } from '../../../../queries/index'
@@ -57,70 +61,226 @@ const serializers = {
 }
 
 const ProductDetails = ({ product, categories }) => {
-  const [activeImage, setActiveImage] = useState(0)
+  console.log('product.markdownDescription: ', product.markdownDescription)
+  const [nav1, setNav1] = useState(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [slider1, setSlider1] = useState(null)
+  useEffect(() => {
+    setNav1(slider1)
+  }, [slider1])
 
-  const handleThumbnailClick = (index) => {
-    setActiveImage(index)
+  const productImagesForAllVariations = product.variations.flatMap(
+    (variation) => variation.images,
+  )
+  const settings = {
+    dots: false,
+    speed: 0,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: false,
+    autoplay: false,
+    onReInit: () => setCurrentSlide(slider1?.innerSlider.state.currentSlide),
+    autoplaySpeed: 1000,
+    lazyLoad: true,
+    asNavFor: '.slider-nav',
+    focusOnSelect: true,
+    nextArrow: (
+      <button
+        type="button"
+        class="slick-product-next slick-arrow"
+        aria-label="Next"
+        style=""
+        aria-disabled="false"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-chevron-right ltr-icon"
+        >
+          <title>Right</title>
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    ),
+    prevArrow: (
+      <button
+        type="button"
+        class="slick-product-prev slick-arrow"
+        aria-label="Previous"
+        aria-disabled="false"
+        style=""
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-chevron-left ltr-icon"
+        >
+          <title>Left</title>
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   }
-
+  console.log('productImagesForAllVariations: ', productImagesForAllVariations)
   return (
     <Layout categories={categories}>
       <main id="content" role="main">
         <div className="container cf">
-          <div className="shopify-section section-main-product">
+          <div className="shopify-section section-main-product page-section-spacing page-section-spacing--no-top-mobile">
             <div className="page-header">
               {/* Breadcrumbs can also be dynamic if needed */}
             </div>
-            <div className="product-detail">
-              <div className="gallery">
-                {product.variations.length > 0 && (
-                  <OwlCarousel className="owl-theme" loop margin={10} items={1}>
-                    {product.variations[0].images.map((img, index) => (
-                      <div
-                        key={index}
-                        className={`item ${index === activeImage ? 'active' : ''}`}
+            <div className="product-detail quickbuy-content spaced-row container variant-status--on-sale">
+              <div className="gallery gallery--layout-carousel-under gallery-size-medium product-column-left has-thumbnails cc-animate-init gallery-initialised -in cc-animate-complete">
+                <div className="gallery__inner">
+                  <div className="main-image">
+                    <div className="slideshow product-slideshow slideshow--custom-initial slick-initialized slick-slider">
+                      <Slider
+                        {...settings}
+                        asNavFor={nav1}
+                        ref={(slider) => setSlider1(slider)}
                       >
-                        <img
-                          src={getCompleteImgUrl(img.asset._ref)}
-                          alt={product.name}
-                        />
+                        {productImagesForAllVariations.map((item) => {
+                          if (!item?.asset?.url) return null // Explicitly return null if url doesn't exist
+                          return (
+                            <div key={item.id}>
+                              <div className="img-body">
+                                <img src={item.asset.url} alt={product.name} />
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </Slider>
+                    </div>
+                  </div>
+                  <div className="thumbnails owl-carousel owl-loaded owl-drag">
+                    <div className="owl-stage-outer">
+                      <div className="owl-stage">
+                        {productImagesForAllVariations.map((item, idx) => {
+                          if (!item?.asset?.url) return null // Explicitly return null if url doesn't exist
+                          return (
+                            <div
+                              key={item.id}
+                              className="owl-item active"
+                              onClick={() => {
+                                slider1?.slickGoTo(idx)
+                              }}
+                              style={{ height: '92px', width: '92px' }}
+                            >
+                              <a
+                                className="thumbnail thumbnail--media-image"
+                                style={{ height: '100%' }}
+                              >
+                                <div
+                                  className="rimage-outer-wrapper"
+                                  style={{ height: '100%' }}
+                                >
+                                  <div
+                                    className="rimage-wrapper "
+                                    style={{ height: '100%' }}
+                                  >
+                                    <img
+                                      className="rimage__image fade-in lazyautosizes lazyloaded"
+                                      src={item.asset.url}
+                                      alt={product.name}
+                                    />
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                          )
+                        })}
                       </div>
-                    ))}
-                  </OwlCarousel>
-                )}
-                <div className="thumbnails">
-                  <ul>
-                    {product.variations[0].images.map((img, index) => (
-                      <li
-                        key={index}
-                        className={index === activeImage ? 'active' : ''}
-                      >
-                        <a onClick={() => handleThumbnailClick(index)}>
-                          <img
-                            src={getCompleteImgUrl(img.asset._ref)}
-                            alt={`Thumbnail ${index}`}
-                          />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="product-info">
-                <h1 className="product-info__title">{product.name}</h1>
-                <div className="product-info__vendor">
-                  by {product.vendor.name}
+              <div className="detail product-column-right cc-animate-init -in cc-animate-complete">
+                <div className="product-form theme-init">
+                  <div className="title-row">
+                    <h1 className="title">{product.name}</h1>
+                  </div>
+                  <div className="price-container">
+                    <div className="variant-visibility-area">
+                      <div className="price-area">
+                        <div className="price h4-style on-sale">
+                          <span className="current-price theme-money">
+                            ₹{product.discountedPrice}
+                          </span>
+                          <span className="was-price theme-money">
+                            ₹{product.originalPrice}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="vendor lightly-spaced-row">
+                    <span className="product-detail-label">By</span>
+                    <a href="#" className="vendor-link">
+                      {product.vendor.name}
+                    </a>
+                  </div>
                 </div>
-                <div className="price">
-                  <span className="price__current">
-                    ₹ {product.discountedPrice || product.originalPrice}
-                  </span>
-                </div>
-                <div className="product-info__description">
-                  {/* Markdown conversion here if needed */}
-                </div>
-                <div className="product-info__actions">
-                  {/* Color options and Add to cart functionality */}
+                <hr className="not-in-quickbuy" />
+                <div className="not-in-quickbuy">
+                  <div className="product-description rte cf">
+                    <h4>
+                      <span style={{ 'text-decoration': 'underline' }}>
+                        <em>
+                          <strong>About</strong>
+                        </em>
+                      </span>
+                    </h4>
+                    <div id="content">
+                      <div className="container cf">
+                        <div
+                          className="shopify-section"
+                          id="shopify-section-product-template"
+                        >
+                          <div
+                            id="main-product-detail"
+                            className="product-detail spaced-row container cf"
+                          >
+                            <div className="detail layout-column-half-right">
+                              <div className="description user-content lightboximages">
+                                <Markdown>
+                                  {product.markdownDescription}
+                                </Markdown>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
