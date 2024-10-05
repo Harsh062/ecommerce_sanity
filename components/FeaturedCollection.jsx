@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { getCompleteImgUrl } from '../utils'
+import $ from 'jquery'
 
 const OwlCarousel = dynamic(() => import('react-owl-carousel'), {
   ssr: false,
@@ -45,6 +46,25 @@ const FeaturedCollection = ({
   featuredLabelText,
   furnitureTypeSlug,
 }) => {
+  const carouselRef = useRef(null)
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      $(carouselRef.current).trigger('refresh.owl.carousel')
+    }
+  }, [])
+
+  const handleNextClick = () => {
+    if (carouselRef.current) {
+      $(carouselRef.current).trigger('next.owl.carousel') // jQuery-based navigation
+    }
+  }
+
+  const handlePrevClick = () => {
+    if (carouselRef.current) {
+      $(carouselRef.current).trigger('prev.owl.carousel') // jQuery-based navigation
+    }
+  }
   return (
     <div className="shopify-section section-featured-collection">
       <div
@@ -55,7 +75,7 @@ const FeaturedCollection = ({
         <div className="container container--not-mobile container--no-max">
           <div className="collection-slider">
             <h2 className="hometitle h4-style align-center has-paging">
-              <a className="prev ltr-icon" href="#">
+              <a className="prev ltr-icon" onClick={handlePrevClick}>
                 <span
                   dangerouslySetInnerHTML={{ __html: options.navText[0] }}
                 />
@@ -66,7 +86,7 @@ const FeaturedCollection = ({
               >
                 <span>{featuredLabelText}</span>
               </a>
-              <a className="next ltr-icon" href="#">
+              <a className="next ltr-icon" onClick={handleNextClick}>
                 <span
                   dangerouslySetInnerHTML={{ __html: options.navText[1] }}
                 />
@@ -81,75 +101,88 @@ const FeaturedCollection = ({
               </a>
             </div>
             <OwlCarousel
+              ref={carouselRef}
               {...options}
               className="collection-listing product-list carousel owl-carousel"
             >
-              {products.map((product) => (
-                <div key={product._id} className="product-block">
-                  <div
-                    className="block-inner"
-                    style={{ minHeight: '414.844px' }}
-                  >
-                    <div className="block-inner-inner">
-                      <div className="image-cont image-cont--with-secondary-image">
-                        <a
-                          className="product-link"
-                          href={`/collections/${product.slug.current}`}
-                          aria-label={product.label}
-                        >
-                          <div className="image-label-wrap">
-                            <div className="product-block__image product-block__image--primary product-block__image--active">
-                              <img
-                                className="rimage__image fade-in cover lazyload"
-                                src={getCompleteImgUrl(
-                                  product.variations[0].images[0].asset._ref
-                                    .slice(6)
-                                    .replace('-jpg', '.jpg')
-                                    .replace('-webp', '.webp')
-                                    .replace('{width}', '540'),
-                                )}
-                                alt={product.label}
-                                layout="responsive"
-                              />
+              {products.map((product) => {
+                const discount = calculateDiscountPercentage(
+                  product.originalPrice,
+                  product.discountedPrice,
+                )
+                const hasDiscount = discount > 0
+                return (
+                  <div key={product._id} className="product-block">
+                    <div
+                      className="block-inner"
+                      style={{ minHeight: '414.844px' }}
+                    >
+                      <div className="block-inner-inner">
+                        <div className="image-cont image-cont--with-secondary-image">
+                          <a
+                            className="product-link"
+                            href={`/collections/${product.furnitureTypes[0].slug.current}/products/${product.slug}`}
+                            aria-label={product.label}
+                          >
+                            <div className="image-label-wrap">
+                              <div className="product-block__image product-block__image--primary product-block__image--active">
+                                <img
+                                  className="rimage__image fade-in cover lazyload"
+                                  src={getCompleteImgUrl(
+                                    product.variations[0].images[0].asset._ref
+                                      .slice(6)
+                                      .replace('-jpg', '.jpg')
+                                      .replace('-webp', '.webp')
+                                      .replace('{width}', '540'),
+                                  )}
+                                  alt={product.label}
+                                  layout="responsive"
+                                />
+                              </div>
                             </div>
-                          </div>
-
-                          <div className="product-label-container">
-                            <span className="product-label product-label--sale">
-                              <span>
-                                {calculateDiscountPercentage(
-                                  product.originalPrice,
-                                  product.discountedPrice,
-                                )}
-                                % off
-                              </span>
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                      <div className="product-info">
-                        <div className="inner">
-                          <div className="innerer">
-                            <a className="product-link" href={product.href}>
-                              <div className="product-block__title">
-                                {product.name}
-                              </div>
-                              <div className="product-price">
-                                <span className="product-price__item product-price__amount product-price__amount--on-sale theme-money">
-                                  {product.originalPrice}
-                                </span>
-                                <span className="product-price__item product-price__compare theme-money">
-                                  {product.discountedPrice}
+                            {hasDiscount && (
+                              <div className="product-label-container">
+                                <span className="product-label product-label--sale">
+                                  <span>{discount}% off</span>
                                 </span>
                               </div>
-                            </a>
+                            )}
+                          </a>
+                        </div>
+                        <div className="product-info">
+                          <div className="inner">
+                            <div className="innerer">
+                              <a
+                                className="product-link"
+                                href={`/collections/${product.furnitureTypes[0].slug.current}/products/${product.slug}`}
+                              >
+                                <div className="product-block__title">
+                                  {product.name}
+                                </div>
+                                <div className="product-price">
+                                  <span className="product-price__item product-price__amount product-price__amount--on-sale theme-money">
+                                    ₹ {product.originalPrice}
+                                  </span>
+                                  {hasDiscount && (
+                                    <>
+                                      <span className="product-price__item product-price__compare theme-money">
+                                        ₹ {product.discountedPrice}
+                                      </span>
+                                      <span className="product-price__item price-label price-label--sale">
+                                        Sale
+                                      </span>
+                                    </>
+                                  )}
+                                </div>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </OwlCarousel>
           </div>
         </div>

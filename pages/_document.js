@@ -7,7 +7,7 @@ export default function Document() {
   return (
     <Html>
       <Head />
-      <body className="template-index swatch-method-standard swatch-style-listed cc-animate-enabled">
+      <body className="swatch-method-standard swatch-style-listed cc-animate-enabled">
         <Main />
         <NextScript />
         <Script id="cc-animate-enabled-script" strategy="afterInteractive">

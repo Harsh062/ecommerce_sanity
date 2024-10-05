@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Markdown from 'react-markdown'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { useEffect } from 'react'
 import blockContentToMarkdown from '@sanity/block-content-to-markdown'
 import { Layout } from '../../../../components'
 import { categoriesQuery, productDetailsQuery } from '../../../../queries/index'
 import { client } from '../../../../lib/client'
-import { getCompleteImgUrl } from '../../../../utils'
+import { updateBodyClass } from '../../../../utils'
 
 const serializers = {
   types: {
@@ -61,13 +61,23 @@ const serializers = {
 }
 
 const ProductDetails = ({ product, categories }) => {
-  console.log('product.markdownDescription: ', product.markdownDescription)
+  console.log('product in ProductDetails', product)
   const [nav1, setNav1] = useState(null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slider1, setSlider1] = useState(null)
+  const router = useRouter()
+  const { furnitureTypeSlug, productSlug } = router.query
   useEffect(() => {
     setNav1(slider1)
   }, [slider1])
+
+  useEffect(() => {
+    // Add specific body class for this page
+    const removeClass = updateBodyClass('template-product')
+
+    // Cleanup when component unmounts or route changes
+    return removeClass
+  }, [router.pathname])
 
   const productImagesForAllVariations = product.variations.flatMap(
     (variation) => variation.images,
@@ -149,15 +159,76 @@ const ProductDetails = ({ product, categories }) => {
       },
     ],
   }
-  console.log('productImagesForAllVariations: ', productImagesForAllVariations)
   return (
     <Layout categories={categories}>
       <main id="content" role="main">
         <div className="container cf">
           <div className="shopify-section section-main-product page-section-spacing page-section-spacing--no-top-mobile">
-            <div className="page-header">
-              {/* Breadcrumbs can also be dynamic if needed */}
+            <div className="container desktop-only not-in-quickbuy cc-animate-init -in cc-animate-complete">
+              <div className="page-header">
+                <nav class="breadcrumbs" aria-label="Breadcrumbs">
+                  <ol class="breadcrumbs-list">
+                    <li class="breadcrumbs-list__item">
+                      <a class="breadcrumbs-list__link" href="/">
+                        Home
+                      </a>{' '}
+                      <span class="icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-chevron-right"
+                        >
+                          <title>Right</title>
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </span>
+                    </li>
+                    <li class="breadcrumbs-list__item">
+                      <a
+                        class="breadcrumbs-list__link"
+                        href={`/collections/${furnitureTypeSlug}`}
+                      >
+                        {product.furnitureTypes[0].title}
+                      </a>{' '}
+                      <span class="icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-chevron-right"
+                        >
+                          <title>Right</title>
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </span>
+                    </li>
+                    <li class="breadcrumbs-list__item">
+                      <a
+                        class="breadcrumbs-list__link"
+                        href={`#`}
+                        aria-current="page"
+                      >
+                        {product.name}
+                      </a>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
             </div>
+
             <div className="product-detail quickbuy-content spaced-row container variant-status--on-sale">
               <div className="gallery gallery--layout-carousel-under gallery-size-medium product-column-left has-thumbnails cc-animate-init gallery-initialised -in cc-animate-complete">
                 <div className="gallery__inner">
@@ -243,7 +314,7 @@ const ProductDetails = ({ product, categories }) => {
                     </div>
                   </div>
                   <div className="vendor lightly-spaced-row">
-                    <span className="product-detail-label">By</span>
+                    <span className="product-detail-label">By&nbsp;</span>
                     <a href="#" className="vendor-link">
                       {product.vendor.name}
                     </a>
@@ -252,13 +323,13 @@ const ProductDetails = ({ product, categories }) => {
                 <hr className="not-in-quickbuy" />
                 <div className="not-in-quickbuy">
                   <div className="product-description rte cf">
-                    <h4>
+                    {/* <h4>
                       <span style={{ 'text-decoration': 'underline' }}>
                         <em>
                           <strong>About</strong>
                         </em>
                       </span>
-                    </h4>
+                    </h4> */}
                     <div id="content">
                       <div className="container cf">
                         <div

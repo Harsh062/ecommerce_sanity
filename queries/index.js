@@ -34,7 +34,10 @@ export const groupedProductsQuery = `
     "slug": slug.current,
     discountedPrice,
     originalPrice,
-    variations
+    variations,
+    "furnitureTypes": furnitureTypes[]->{
+      slug
+    }
   }
 }
 `
@@ -49,8 +52,9 @@ export const productsListByFurnitureTypeQuery = `
     description,
     variations,
     "furnitureTypes": furnitureTypes[]->{
-    slug
-  }
+      "slug": slug.current,
+      title
+    }
 }
 `
 

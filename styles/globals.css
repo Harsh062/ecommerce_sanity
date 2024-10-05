@@ -8652,6 +8652,10 @@ img {
   text-align: end;
 }
 
+.ltr-icon {
+  cursor: pointer;
+}
+
 [dir='rtl'] .ltr-icon svg,
 [dir='rtl'] svg.ltr-icon {
   transform: scaleX(-1);
@@ -9065,6 +9069,7 @@ ul.inline li {
 .product-block .product-link {
   display: block;
   position: relative;
+  cursor: pointer;
 }
 .product-block .product-link:not(.button) {
   color: inherit;
