@@ -1,44 +1,12 @@
-import dynamic from 'next/dynamic'
-import React, { useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { getCompleteImgUrl } from '../utils'
-import $ from 'jquery'
-
-const OwlCarousel = dynamic(() => import('react-owl-carousel'), {
-  ssr: false,
-})
-
-const options = {
-  items: 1,
-  margin: 10,
-  nav: true,
-  navText: [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><title>Left</title><polyline points="15 18 9 12 15 6"></polyline></svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><title>Right</title><polyline points="9 18 15 12 9 6"></polyline></svg>`,
-  ],
-  dots: false,
-  loop: false,
-  responsive: {
-    0: {
-      items: 2,
-    },
-    600: {
-      items: 3,
-    },
-    1000: {
-      items: 5,
-    },
-  },
-}
+import 'react-responsive-carousel/lib/styles/carousel.min.css' // Import carousel styles
+import { Carousel } from 'react-responsive-carousel'
 
 function calculateDiscountPercentage(originalPrice, discountedPrice) {
-  // Calculate the discount percentage
   const discountPercentage =
     ((originalPrice - discountedPrice) / originalPrice) * 100
-
-  // Round the discount percentage to the nearest whole number
-  const roundedDiscountPercentage = Math.round(discountPercentage)
-
-  return roundedDiscountPercentage
+  return Math.round(discountPercentage)
 }
 
 const FeaturedCollection = ({
@@ -46,25 +14,18 @@ const FeaturedCollection = ({
   featuredLabelText,
   furnitureTypeSlug,
 }) => {
-  const carouselRef = useRef(null)
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      $(carouselRef.current).trigger('refresh.owl.carousel')
-    }
-  }, [])
+  const [currentSlide, setCurrentSlide] = useState(0) // State to track current slide
 
   const handleNextClick = () => {
-    if (carouselRef.current) {
-      $(carouselRef.current).trigger('next.owl.carousel') // jQuery-based navigation
-    }
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % products.length) // Move to the next slide
   }
 
   const handlePrevClick = () => {
-    if (carouselRef.current) {
-      $(carouselRef.current).trigger('prev.owl.carousel') // jQuery-based navigation
-    }
+    setCurrentSlide((prevSlide) =>
+      prevSlide === 0 ? products.length - 1 : prevSlide - 1,
+    ) // Move to the previous slide
   }
+
   return (
     <div className="shopify-section section-featured-collection">
       <div
@@ -77,18 +38,22 @@ const FeaturedCollection = ({
             <h2 className="hometitle h4-style align-center has-paging">
               <a className="prev ltr-icon" onClick={handlePrevClick}>
                 <span
-                  dangerouslySetInnerHTML={{ __html: options.navText[0] }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><title>Left</title><polyline points="15 18 9 12 15 6"></polyline></svg>`,
+                  }}
                 />
               </a>
               <a
                 className="has-paging__title"
-                href="/collections/kids-furniture"
+                href={`/collections/${furnitureTypeSlug}`}
               >
                 <span>{featuredLabelText}</span>
               </a>
               <a className="next ltr-icon" onClick={handleNextClick}>
                 <span
-                  dangerouslySetInnerHTML={{ __html: options.navText[1] }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><title>Right</title><polyline points="9 18 15 12 9 6"></polyline></svg>`,
+                  }}
                 />
               </a>
             </h2>
@@ -100,10 +65,19 @@ const FeaturedCollection = ({
                 View all
               </a>
             </div>
-            <OwlCarousel
-              ref={carouselRef}
-              {...options}
-              className="collection-listing product-list carousel owl-carousel"
+            <Carousel
+              selectedItem={currentSlide}
+              onChange={(index) => setCurrentSlide(index)} // Update slide on change
+              showThumbs={false}
+              showIndicators={false}
+              showStatus={false}
+              infiniteLoop // Enable looping for the circular effect
+              centerMode // Center the first item
+              centerSlidePercentage={75} // Show 80% of the slide (adjust as needed)
+              emulateTouch
+              useKeyboardArrows
+              dynamicHeight={false} // Optional: prevents dynamic height issues
+              showArrows={false} // Disable default arrows, using custom ones
             >
               {products.map((product) => {
                 const discount = calculateDiscountPercentage(
@@ -112,10 +86,20 @@ const FeaturedCollection = ({
                 )
                 const hasDiscount = discount > 0
                 return (
-                  <div key={product._id} className="product-block">
+                  <div
+                    key={product._id}
+                    className="product-block"
+                    style={{ padding: '0 8px' }}
+                  >
+                    {' '}
+                    {/* 16px gap between items (8px on each side) */}
                     <div
                       className="block-inner"
-                      style={{ minHeight: '414.844px' }}
+                      style={{
+                        minHeight: '414.844px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }} // Center-align the image
                     >
                       <div className="block-inner-inner">
                         <div className="image-cont image-cont--with-secondary-image">
@@ -137,6 +121,7 @@ const FeaturedCollection = ({
                                   )}
                                   alt={product.label}
                                   layout="responsive"
+                                  style={{ maxWidth: '100%', height: 'auto' }} // Ensure image is responsive
                                 />
                               </div>
                             </div>
@@ -183,7 +168,7 @@ const FeaturedCollection = ({
                   </div>
                 )
               })}
-            </OwlCarousel>
+            </Carousel>
           </div>
         </div>
       </div>
