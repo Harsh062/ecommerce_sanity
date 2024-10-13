@@ -13259,3 +13259,13 @@ model-viewer .container {
 .rotate-180 {
   transform: rotate(180deg);
 }
+
+/* Remove default list-style from carousel items */
+.carousel ul {
+  list-style: none;
+  padding-left: 0; /* Remove padding that might cause misalignment */
+}
+
+.carousel li {
+  list-style: none; /* Ensure no bullet points or markers are rendered */
+}
