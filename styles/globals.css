@@ -2020,9 +2020,9 @@ ol li {
   list-style: decimal outside;
 }
 
-ul li {
+/* ul li {
   list-style: disc outside;
-}
+} */
 
 dl dd {
   margin-inline-start: 1em;
@@ -9113,13 +9113,6 @@ ul.inline li {
   max-width: 100%;
 }
 
-.product-block__image {
-  width: 248px;
-  height: 310px;
-  max-width: 248px;
-  max-height: 310px;
-}
-
 .product-block__image .rimage__image {
   object-position: center center;
 }
@@ -13268,4 +13261,16 @@ model-viewer .container {
 
 .carousel li {
   list-style: none; /* Ensure no bullet points or markers are rendered */
+}
+
+@media only screen and (max-width: 767.98px) {
+  #qab_message {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  #qab_message {
+    font-size: 20px;
+  }
 }

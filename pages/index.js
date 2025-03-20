@@ -6,6 +6,7 @@ import { StoreInfo, FeaturedCollection, Layout } from '../components'
 import { updateBodyClass } from '../utils'
 
 const Home = ({ categories, groupedProducts }) => {
+  console.log(groupedProducts)
   const router = useRouter()
 
   useEffect(() => {

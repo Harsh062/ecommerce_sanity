@@ -53,10 +53,7 @@ const QabContainer = () => {
               fontSize: '20px',
             }}
           >
-            <span
-              id="qab_message"
-              style={{ color: 'inherit', fontSize: '20px' }}
-            >
+            <span id="qab_message" style={{ color: 'inherit' }}>
               "LOWEST PRICE GUARANTEED" compare to all other Marketplace - All
               prices are inclusive of GST
             </span>
