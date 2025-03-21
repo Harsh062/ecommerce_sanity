@@ -51,7 +51,7 @@ const SectionAnnouncementContainer = () => {
                   className="whatsapp"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://api.whatsapp.com/send?phone=+918770452462"
+                  href="https://web.whatsapp.com/send?phone=+919765569262"
                 >
                   <svg
                     aria-hidden="true"
