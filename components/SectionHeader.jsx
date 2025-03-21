@@ -181,7 +181,7 @@ const SectionHeader = ({ categories }) => {
                     <a className="logo__link" href="/" title="HOMEGENIC">
                       <img
                         className="logo__image"
-                        src="//www.homegenic.in/cdn/shop/files/Homegenic_Logo_with_R_8198be95-5b9f-47f8-ba44-fb608c24bb72_380x.jpg?v=1630527344"
+                        src="/assets/sundaram_logo.png"
                         alt="HOMEGENIC"
                         itemprop="logo"
                         width="850"
