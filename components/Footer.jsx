@@ -177,7 +177,7 @@ const Footer = () => {
                 </div>
                 <div className="copyright">
                   <span className="copy">
-                    © 2024 <a href="/">SUNDARAM</a>
+                    © 2025 <a href="/">SUNDARAM</a>
                   </span>
                   {/* <a
                     target="_blank"

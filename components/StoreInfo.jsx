@@ -56,16 +56,11 @@ const StoreInfo = () => {
             <div className="map-section__content map-section__feature">
               <div
                 className="map-section__feature-image map-section__feature-image--template--14658441216103__1635928697c562053a lazyloaded"
-                data-bgset="//www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812_180x.jpg?v=1625385715 180w 169h,
-                //www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812_360x.jpg?v=1625385715 360w 338h,
-                //www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812_540x.jpg?v=1625385715 540w 507h,
-                //www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812_720x.jpg?v=1625385715 720w 676h,
-                //www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812.jpg?v=1625385715 886w 832h"
                 data-parent-fit="cover"
                 style={{
                   backgroundPosition: '50% 50%',
                   backgroundImage:
-                    'url("https://www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812.jpg?v=1625385715")',
+                    'url("/assets/store_location_google_maps.png")',
                 }}
               ></div>
               <noscript>
@@ -73,7 +68,7 @@ const StoreInfo = () => {
                   className="map-section__feature-image map-section__feature-image--template--14658441216103__1635928697c562053a"
                   style={{
                     backgroundImage:
-                      'url(//www.homegenic.in/cdn/shop/files/Fullscreen_capture_04-07-2021_132812_400x400.jpg?v=1625385715)',
+                      'url("/assets/store_location_google_maps.png")',
                   }}
                 ></div>
               </noscript>
