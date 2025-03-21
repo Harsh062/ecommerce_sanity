@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import { client } from '../lib/client'
 import { categoriesQuery, groupedProductsQuery } from '../queries/index'
 import { StoreInfo, FeaturedCollection, Layout } from '../components'
@@ -17,17 +18,27 @@ const Home = ({ categories, groupedProducts }) => {
     return removeClass
   }, [router.pathname])
   return (
-    <Layout categories={categories}>
-      {groupedProducts.map((group, index) => (
-        <FeaturedCollection
-          key={group._id}
-          products={group.products}
-          featuredLabelText={group.featuredLabelText}
-          furnitureTypeSlug={group.slug}
+    <>
+      <Head>
+        <title>Sundaram Furniture</title>
+        <meta
+          name="description"
+          content="Discover premium quality furniture at Sundaram Furniture. Shop our wide collection of sofas, dining sets, beds and more."
         />
-      ))}
-      <StoreInfo />
-    </Layout>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Layout categories={categories}>
+        {groupedProducts.map((group, index) => (
+          <FeaturedCollection
+            key={group._id}
+            products={group.products}
+            featuredLabelText={group.featuredLabelText}
+            furnitureTypeSlug={group.slug}
+          />
+        ))}
+        <StoreInfo />
+      </Layout>
+    </>
   )
 }
 
