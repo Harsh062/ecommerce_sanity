@@ -154,19 +154,30 @@ const MobileNavigationDrawer = ({ categories }) => {
                 category.subCategories.length ||
                 category.furnitureTypesWithoutSubCategory.length
               const showMegaMenu = category.subCategories.length > 0
+
               return (
                 <li
-                  className={`navigation__item navigation__item--with-children ${showMegaMenu ? 'navigation__item--with-mega-menu' : 'navigation__item--with-small-menu'}`}
+                  key={category._id}
+                  className={`navigation__item navigation__item--with-children ${
+                    showMegaMenu
+                      ? 'navigation__item--with-mega-menu'
+                      : 'navigation__item--with-small-menu'
+                  }`}
                 >
                   <a
-                    href="/collections/sofa-set"
+                    href="#"
                     className="navigation__link"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    aria-controls="NavigationTier2-1-mobMobileNav"
+                    aria-controls={`NavigationTier2-${index}-mobMobileNav`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      openCategoryMenu(category.title)
+                    }}
                   >
                     {category.title}
                   </a>
+
                   {doesCategoryHaveFurnitureType ? (
                     <>
                       <a
@@ -192,7 +203,7 @@ const MobileNavigationDrawer = ({ categories }) => {
                       </a>
 
                       <div
-                        id="NavigationTier2-1-mobMobileNav"
+                        id={`NavigationTier2-${index}-mobMobileNav`}
                         className="navigation__tier-2-container navigation__child-tier"
                         style={{ top: '54px' }}
                       >
@@ -205,10 +216,11 @@ const MobileNavigationDrawer = ({ categories }) => {
                                 return (
                                   <li className="navigation__item navigation__item--with-children navigation__column">
                                     <a
-                                      href="/collections/arm-chairs"
+                                      href="#"
                                       className="navigation__link navigation__column-title"
                                       aria-haspopup="true"
                                       aria-expanded="false"
+                                      onClick={handleSubcategoryClick}
                                     >
                                       {subCategory.title}
                                     </a>
