@@ -53,7 +53,8 @@ export const productsListByFurnitureTypeQuery = `
     variations,
     "furnitureTypes": furnitureTypes[]->{
       "slug": slug.current,
-      title
+      title,
+      description
     }
 }
 `
