@@ -1,0 +1,40 @@
+[2025-04-05T09:30:38.000Z] 🚀 Starting full scrape...
+[2025-04-05T09:30:38.001Z] 
+🔎 Scraping page 1: https://www.homegenic.in/collections/boltless-racks?page=1
+[2025-04-05T09:30:38.782Z] Processing ith product: 
+[2025-04-05T09:30:38.783Z] 
+🛒 (1/2) Processing: Homegenic Boltless Multi Purpose Adjustable Rack - Laminated MDF shelves (homegenic-boltless-multi-purpose-adjustable-rack-made-in-india)
+[2025-04-05T09:30:39.822Z] ⚠️ Skipping duplicate: homegenic-boltless-multi-purpose-adjustable-rack-made-in-india
+[2025-04-05T09:30:39.822Z] Processing ith product: 
+[2025-04-05T09:30:39.825Z] 
+🛒 (2/2) Processing: Storedge Corner Wall Shelf Multipurpose Utility Storage Organizer for Home Décor (storedge-corner-racks-and-shelf-for-home-decor)
+[2025-04-05T09:30:43.589Z] ✅ Uploaded image: 61OPVQNMPDL._SL1500.jpg
+[2025-04-05T09:30:46.224Z] ✅ Uploaded image: 61OALCwR1xL._SL1500.jpg
+[2025-04-05T09:30:48.623Z] ✅ Uploaded image: 61BIB4yKwdL._SL1500.jpg
+[2025-04-05T09:30:51.285Z] ✅ Uploaded image: 16fe04fe-b17d-4d68-a370-1caaf9845f78.__CR0_0_1920_1188_PT0_SX970_V1.jpg
+[2025-04-05T09:30:52.950Z] ✅ Uploaded image: 3f0fb828-a164-4cac-9c6c-a1c878763f9f.__CR0_649_2048_1267_PT0_SX970_V1.jpg
+[2025-04-05T09:30:55.332Z] ✅ Uploaded image: 175bf57e-d263-4475-9d59-b210b28f69d0.__CR0_269_2048_1267_PT0_SX970_V1.jpg
+[2025-04-05T09:30:58.139Z] ✅ Uploaded image: 75701775-a913-4360-9b9c-9c0a2f0d619f.__CR181_0_3637_2250_PT0_SX970_V1.jpg
+[2025-04-05T09:31:00.551Z] ✅ Uploaded image: 7431848f-af50-422a-b59d-2d3a2eb2de50.__CR191_0_3637_2250_PT0_SX970_V1.jpg
+[2025-04-05T09:31:02.928Z] ✅ Uploaded image: 183a3cd8-f0d1-45c4-b203-45e052df08de.__CR222_0_3637_2250_PT0_SX970_V1.jpg
+[2025-04-05T09:31:05.515Z] ✅ Uploaded image: 71_1u3vB9OL._SL1500.jpg
+[2025-04-05T09:31:08.593Z] ✅ Uploaded image: 61c58fGqTQL._SL1500.jpg
+[2025-04-05T09:31:10.411Z] ✅ Uploaded image: 71m1wtH0vLL._SL1500.jpg
+[2025-04-05T09:31:13.516Z] ✅ Uploaded image: 71_-KMzFjLL._SL1500.jpg
+[2025-04-05T09:31:16.025Z] ✅ Uploaded image: 71ox92Y34AL._SL1500.jpg
+[2025-04-05T09:31:18.358Z] ✅ Uploaded image: 51Ufqpdi6bL._SL1500.jpg
+[2025-04-05T09:31:20.780Z] ✅ Uploaded image: 61Hsf5UkrGL._SL1500.jpg
+[2025-04-05T09:31:23.113Z] ✅ Uploaded image: 51sAv4WtIEL._SL1500.jpg
+[2025-04-05T09:31:24.624Z] ✅ Uploaded image: 51YV0PAi54L._SL1500.jpg
+[2025-04-05T09:31:27.001Z] ✅ Uploaded image: 71Ui1Wmv25L._SL1500.jpg
+[2025-04-05T09:31:29.243Z] ✅ Uploaded image: Fullscreencapture05-06-2021190618.jpg
+[2025-04-05T09:31:31.673Z] ✅ Uploaded image: Fullscreencapture05-06-2021190733.jpg
+[2025-04-05T09:31:33.722Z] ✅ Uploaded image: Fullscreencapture05-06-2021190810.jpg
+[2025-04-05T09:31:35.939Z] ✅ Uploaded image: Fullscreencapture05-06-2021190846.jpg
+[2025-04-05T09:31:37.517Z] ✅ Created: Storedge Corner Wall Shelf Multipurpose Utility Storage Organizer for Home Décor (RvKg2H7lodOtU53j0yCvtL)
+[2025-04-05T09:31:40.019Z] 📦 Page 1 done — 1 product(s) scraped.
+[2025-04-05T09:31:43.022Z] 
+🔎 Scraping page 2: https://www.homegenic.in/collections/boltless-racks?page=2
+[2025-04-05T09:31:43.616Z] 📦 Page 2 done — 0 product(s) scraped.
+[2025-04-05T09:31:43.617Z] ✅ No more products. Scraping complete.
+[2025-04-05T09:31:43.617Z] 🎉 All pages scraped.
