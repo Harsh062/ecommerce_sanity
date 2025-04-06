@@ -2,7 +2,11 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { client } from '../lib/client'
-import { categoriesQuery, groupedProductsQuery } from '../queries/index'
+import {
+  categoriesQuery,
+  groupedProductsQuery,
+  collectionsOrder,
+} from '../queries/index'
 import { StoreInfo, FeaturedCollection, Layout } from '../components'
 import { updateBodyClass } from '../utils'
 
@@ -45,8 +49,11 @@ const Home = ({ categories, groupedProducts }) => {
 export const getServerSideProps = async () => {
   const categories = await client.fetch(categoriesQuery)
   const groupedProducts = await client.fetch(groupedProductsQuery)
+  const orderedGroupedProducts = collectionsOrder
+    .map((id) => groupedProducts.find((item) => item._id === id))
+    .filter(Boolean)
   return {
-    props: { categories, groupedProducts },
+    props: { categories, groupedProducts: orderedGroupedProducts },
   }
 }
 

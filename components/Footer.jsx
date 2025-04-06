@@ -61,63 +61,6 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className="column column--quarter align-center block-id-1478526647261">
-                <div>
-                  <div className="icon-with-caption">
-                    <div className="icon-with-caption__icon">
-                      <svg
-                        className="icon icon--medium icon--type-heart"
-                        strokeWidth="1"
-                        aria-hidden="true"
-                        focusable="false"
-                        role="presentation"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M8.86 4.38a2.78 2.78 0 013.72-.3c1.4 1.2 1.2 3.11.19 4.13L7.98 13.1c-.05.06-.1.06-.19 0L3.01 8.2a2.8 2.8 0 01.19-4.1c1.06-.9 2.7-.76 3.74.28l.96.98.96-.98zm-.96-.45l.24-.25a3.78 3.78 0 015.07-.38l.01.01v.01a3.82 3.82 0 01.26 5.59l-4.79 4.9a1.12 1.12 0 01-1.45.12l-.1-.06L2.3 8.91a3.8 3.8 0 01.26-5.57 3.79 3.79 0 015.1.33l.01.01.24.25z"
-                          fillRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                    <div className="icon-with-caption__text heading-font h6-style align-center">
-                      Easy Returns
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="column column--quarter align-center block-id-1478527611164">
-                <div>
-                  <div className="icon-with-caption">
-                    <div className="icon-with-caption__icon">
-                      <svg
-                        className="icon icon--medium icon--type-map_pin"
-                        strokeWidth="1"
-                        aria-hidden="true"
-                        focusable="false"
-                        role="presentation"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M6.72 14.63L7.5 14l.78.63-.78.96-.78-.96zm1.41-1.44L7.5 14s-.25-.3-.63-.81C5.63 11.54 3 7.8 3 5.79 3 3.14 5.01 1 7.5 1S12 3.14 12 5.79c0 2.02-2.63 5.75-3.87 7.4zm.15 1.44L7.5 14l-.78.63-.01-.02-.04-.05a26.53 26.53 0 01-.67-.87c-.43-.58-1.01-1.37-1.59-2.26A24.32 24.32 0 012.8 8.62 7.07 7.07 0 012 5.79C2 2.65 4.4 0 7.5 0S13 2.65 13 5.79c0 .9-.36 1.9-.8 2.83-.45.95-1.04 1.93-1.61 2.81a43.67 43.67 0 01-2.26 3.13l-.04.05v.01h-.01z"
-                          fillRule="evenodd"
-                        ></path>
-                        <path
-                          fill="currentColor"
-                          d="M7.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm0 1a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
-                          fillRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                    <div className="icon-with-caption__text heading-font h6-style align-center">
-                      Facility to check Pincode before placing Orders
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -137,21 +80,16 @@ const Footer = () => {
                     aria-label="Secondary navigation"
                   >
                     <li>
-                      <a href="/pages/about-us">About Us</a>
+                      <a href="/about-us">About Us</a>
                     </li>
 
                     <li>
-                      <a href="/pages/get-in-touch">Get In Touch</a>
-                    </li>
-                    <li>
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4Q55MiXcEFnuIgEre7NiKOcdorTJXz-GI22C2Aojt5SvTJw/viewform?usp=sf_link">
-                        Valuable Feedback
-                      </a>
+                      <a href="/get-in-touch">Get In Touch</a>
                     </li>
 
-                    <li>
+                    {/* <li>
                       <a href="/pages/testimonials">Testimonials</a>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
